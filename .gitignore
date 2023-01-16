@@ -48,6 +48,7 @@ rmis-venv2/
 !.vscode/launch.json
 !.vscode/extensions.json
 !.vscode/*.code-snippets
+.DS_Store
 
 # Local History for Visual Studio Code
 .history/
@@ -59,3 +60,8 @@ rmis-venv2/
 # Ignore all local history of files
 .history
 .ionide
+
+# Project Sepcific
+input/
+output/
+.env
