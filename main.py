@@ -5,10 +5,10 @@ import nltk
 from nltk.tokenize import sent_tokenize
 import openai
 import json
-from transformers import GPT2TokenizerFast, pipeline, AutoTokenizer, AutoModelForSeq2SeqLM, T5Tokenizer, T5Model, T5ForConditionalGeneration
 from rouge_score import rouge_scorer
+import torch
+from transformers import BertTokenizerFast, EncoderDecoderModel
 
-load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 engine_list = openai.Engine.list()
 
@@ -74,6 +74,17 @@ def gpt3_summarize(content, max_tokens):
     json_object = json.loads(str(response))
     return json_object['choices'][0]['text']
 
+# Summarize with German Model BERT
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+ckpt = 'mrm8488/bert2bert_shared-german-finetuned-summarization'
+tokenizer = BertTokenizerFast.from_pretrained(ckpt)
+model = EncoderDecoderModel.from_pretrained(ckpt).to(device)
+def generate_german_summary(text):
+   inputs = tokenizer([text], padding="max_length", truncation=True, max_length=512, return_tensors="pt")
+   input_ids = inputs.input_ids.to(device)
+   attention_mask = inputs.attention_mask.to(device)
+   output = model.generate(input_ids, attention_mask=attention_mask, min_length=150, max_length=200)
+   return tokenizer.decode(output[0], skip_special_tokens=True)
 
 # concatenate Text
 def concatenate_text(subtexts):
@@ -101,17 +112,27 @@ def final_summary(text):
         res.append(gpt3_summarize(text, 150))
     return concatenate_text(res)
 
-summary_1_1 = final_summary(text_1)
+#Commented out to save OpenAI Credits
 
-evaluation_1_1 = eval_rouge(summary_1_1, goldensource_1)
+#summary_1_1 = final_summary(text_1)
 
-save_summary(summary_1_1, "summary_1_1.txt")
-print("Summary: " + summary_1_1)
+#evaluation_1_1 = eval_rouge(summary_1_1, goldensource_1)
+
+#save_summary(summary_1_1, "summary_1_1.txt")
+#print("Summary: " + summary_1_1)
+#print("----------------------")
+#print("Evaluation: " )
+#print(evaluation_1_1)
+
+# Approach 2 (German/Multilingual Model)
+summary_2_1 = generate_german_summary(text_1)
+evaluation_2_1 = eval_rouge(summary_2_1, goldensource_1)
+
+save_summary(summary_2_1, "summary_2_1.txt")
+print("Summary: " + summary_2_1)
 print("----------------------")
 print("Evaluation: " )
-print(evaluation_1_1)
-
-# Approach 2 (German Model)
+print(evaluation_2_1)
 
 # Approach 3 (English Medical Model)
 
@@ -129,6 +150,7 @@ def translate_summarize(text):
         translated_res.append(translate(text, "DE"))
     return concatenate_text(translated_res)
 
+#Commented out to save OpenAI Credits
 #summary_4_1 = translate_summarize(text_1)
     
 
@@ -137,43 +159,3 @@ def translate_summarize(text):
 
 
 #Development 
-
-
-#Try
-
-
-
-#Try Try
-def summarize_german(input):
-    tokenizer = AutoTokenizer.from_pretrained("Einmalumdiewelt/T5-Base_GNAD")
-    model = AutoModelForSeq2SeqLM.from_pretrained("Einmalumdiewelt/T5-Base_GNAD")
-    print(len(tokenizer.tokenize(input)))
-    summarizer = pipeline(
-        "summarization",
-         model=model,
-         tokenizer=tokenizer,
-         min_length = 200, 
-         max_length = 280)
-    return summarizer(input)
-
-def translate2(input):
-    tokenizer = AutoTokenizer.from_pretrained("google/bert2bert_L-24_wmt_de_en")
-    model = AutoModelForSeq2SeqLM.from_pretrained("google/bert2bert_L-24_wmt_de_en")
-    input_ids = tokenizer(input, return_tensors="pt", add_special_tokens=False).input_ids
-    output_ids = model.generate(input_ids)[0]
-    print(tokenizer.decode(output_ids, skip_special_tokens=True))
-
-def summarize_english(input):
-    tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large-cnn")
-    model = AutoModelForSeq2SeqLM.from_pretrained("facebook/bart-large-cnn")
-    print(len(tokenizer.tokenize(input)))
-    summarizer = pipeline(
-        "summarization",
-         model=model,
-         tokenizer=tokenizer,
-         min_length = 200, 
-         max_length = 280)
-    return summarizer(input)
-    
-
-
