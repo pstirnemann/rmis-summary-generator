@@ -138,6 +138,7 @@ def translate_summarize(text):
 # Evaluation functions
 # -------------------------------------------
 
+
 # Evaluate
 def eval_rouge(input, goldensource):
     scorer = rouge_scorer.RougeScorer(['rouge1', 'rougeL'], use_stemmer=True)
