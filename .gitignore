@@ -38,8 +38,7 @@ pip-log.txt
 pip-delete-this-directory.txt
 
 # Virtual Envornments
-rmis-venv/
-rmis-venv2/
+venv/
 
 ### VisualStudioCode ###
 .vscode/*
@@ -62,6 +61,6 @@ rmis-venv2/
 .ionide
 
 # Project Sepcific
-input/
+convert/
 output/
 .env
