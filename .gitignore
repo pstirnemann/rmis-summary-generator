@@ -63,4 +63,5 @@ venv/
 # Project Sepcific
 convert/
 output/
+output_save/
 .env
