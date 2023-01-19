@@ -91,9 +91,9 @@ def translate_summarize(text):
     for text in text_token:
         translation.append(translate(text, "EN"))
     res = []
-    for text in translation:
-        res.append(gpt3_summarize(text, 150))
+    for result in translation:
+        res.append(gpt3_summarize(result, 150))
     translated_res = []
-    for text in res:
-        translated_res.append(translate(text, "DE"))
+    for t_result in res:
+        translated_res.append(translate(t_result, "DE"))
     return concatenate_text(translated_res)

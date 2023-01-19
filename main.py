@@ -10,7 +10,7 @@ load_dotenv('/.env')
 # Load inputfiles
 input_files = read_all_files('input')
 
-
+'''
 # Approach 1 (GPT-3)
 def final_gpt3_summary(text):
     res = []
@@ -36,26 +36,12 @@ for input in input_files:
     print(input + " : Done")
 print("End GM Approach")
 
-# Approach 3 (English Medical Model)
+'''
+# Approach 3 (Translation & Medical Model))
 
 
-
-#print(generate_bio_summary(text_1))
 
 # Approach 4 (Translation & GPT-3)
-def translate_summarize(text):
-    text_token = split_text(text, 700)
-    translation = []
-    for text in text_token:
-        translation.append(translate(text, "EN"))
-    res = []
-    for text in translation:
-        res.append(gpt3_summarize(text, 150))
-    translated_res = []
-    for text in res:
-        translated_res.append(translate(text, "DE"))
-    return concatenate_text(translated_res)
-
 print("Start Translate Approach")
 for input in input_files:
     text = read_text('input/' + input)
@@ -64,9 +50,4 @@ for input in input_files:
     print(input + " : Done")
 print("End Translate Approach")
     
-
-# Approach 5 (Translation & Medical Model)
-
-
-
 #Development 
