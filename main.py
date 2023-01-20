@@ -21,7 +21,6 @@ input_files = read_all_files('input')
 # Approach 1 (GPT-3)
 
 # Function to process the gpt3 summary where the text needs to be splitted before calling the API
-'''
 def final_gpt3_summary(text):
     res = []
     text_tokens = split_text(text, 700)
@@ -46,7 +45,6 @@ for input in input_files:
     print(input + " : Done")
 print("End GM Approach")
 
-'''
 
 # Approach 3 (Translation & Medical Model)
 def final_biomedical_summary(text):
@@ -65,7 +63,6 @@ for input in input_files:
 print("End GM Approach")
 
 # Approach 4 (Translation & GPT-3)
-'''
 def final_translate_summary(text):
     res = []
     text_tokens = split_text(text, 700)
@@ -80,4 +77,3 @@ for input in input_files:
     save_summary(summary,input,'T')
     print(input + " : Done")
 print("End Translate Approach")
-'''
