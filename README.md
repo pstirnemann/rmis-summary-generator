@@ -4,6 +4,8 @@
 
 How to create a virtual environment in pythion: (https://towardsdatascience.com/virtual-environments-104c62d48c54)
 
+---
+
 ## Prerequisites:
 
 ### Requirements
@@ -25,6 +27,8 @@ Follow the steps below to generate and use a personal API key.
 3. Add a .env File
 4. Add your API Key in the .evn file `OPENAI_API_KEY = YOUR_KEY`
 
+---
+
 ## What the project contains:
 
 ### main.py
@@ -33,10 +37,18 @@ The file contains the main code to summarize each text contained in the input fo
 Multiple approaches are developed and all of them will run once the main.py script is executed. 
 Durring the execution the script will write out some logs about the current task to the console. 
 
-==The script uses an API provided by openAI which generatescosts. Be carefull how to use it. 
+---
+
+**!!!**
+
+**The script uses an API provided by openAI which generatescosts. Be carefull how to use it. 
 To avoid costs the following approaches need to be commented out: 
     - Approach 1 (GPT-3)
-    - Approach 4 (Translation & GPT-3)==
+    - Approach 4 (Translation & GPT-3)**
+
+**!!!**
+
+---
 
 ### evaluate.py
 
@@ -55,6 +67,8 @@ This code contains different summary functions which implement different models 
 ### helper_functions.py
 
 This file contains various helper functions used in the different scripts. 
+
+---
 
 ## Run
 
