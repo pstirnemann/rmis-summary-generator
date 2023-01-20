@@ -45,6 +45,7 @@ Durring the execution the script will write out some logs about the current task
 
 To avoid costs the following approaches need to be commented out:
 - Approach 1 (GPT-3)
+- Approach 3 (Translation & Medical Model)
 - Approach 4 (Translation & GPT-3)
 
 ---

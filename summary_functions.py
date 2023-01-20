@@ -12,7 +12,7 @@ from nltk.tokenize import sent_tokenize
 import openai
 import json
 import torch
-from transformers import BertTokenizerFast, EncoderDecoderModel
+from transformers import BertTokenizerFast, EncoderDecoderModel, AutoTokenizer, AutoModelForSeq2SeqLM, pipeline
 
 # Initialize openAPI 
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -95,3 +95,13 @@ def translate_summarize(text,max_tokens):
     summary = gpt3_summarize(translation, max_tokens)
     res = translate(summary, "DE")
     return res
+
+# 
+def biomedical_summary(text):
+    tokenizer = AutoTokenizer.from_pretrained("Blaise-g/longt5_tglobal_large_scitldr")
+    model = AutoModelForSeq2SeqLM.from_pretrained("Blaise-g/longt5_tglobal_large_scitldr")
+    summarizer = pipeline("summarization", model=model, tokenizer=tokenizer)
+    eng_text = translate(text, "EN")
+    summary = summarizer(eng_text)
+    ger_text = translate(summary[0]['summary_text'], "DE")
+    return ger_text

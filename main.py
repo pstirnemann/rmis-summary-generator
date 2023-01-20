@@ -8,6 +8,7 @@ The script uses an API provided by openAI which generates costs. Be carefull how
 To avoid costs the following approaches need to be commented out: 
     - Approach 1 (GPT-3)
     - Approach 4 (Translation & GPT-3)
+    - Approach 3 (Translation & Medical Model)
 '''
 from helper_functions import *
 from summary_functions import *
@@ -47,12 +48,24 @@ print("End GM Approach")
 
 '''
 
-# Approach 3 (Translation & Medical Model))
+# Approach 3 (Translation & Medical Model)
+def final_biomedical_summary(text):
+    res = []
+    text_tokens = split_text(text, 700)
+    for text in text_tokens:
+        res.append(biomedical_summary(text))
+    return concatenate_text(res)
 
-
+print("Start Biomedical Approach")
+for input in input_files:
+    text = read_text('input/' + input)
+    summary = final_biomedical_summary(text)
+    save_summary(summary,input,'BM')
+    print(input + " : Done")
+print("End GM Approach")
 
 # Approach 4 (Translation & GPT-3)
-
+'''
 def final_translate_summary(text):
     res = []
     text_tokens = split_text(text, 700)
@@ -67,3 +80,4 @@ for input in input_files:
     save_summary(summary,input,'T')
     print(input + " : Done")
 print("End Translate Approach")
+'''
