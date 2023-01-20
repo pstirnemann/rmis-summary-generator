@@ -1,7 +1,10 @@
+'''
+Helper Functions:
+
+This file contains various helper functions used in the different scripts. 
+'''
 import os
-# -------------------------------------------
-# Helper functions
-# -------------------------------------------
+import pandas as pd
 
 # Scan directory for input files
 def read_all_files(directory):
@@ -33,3 +36,12 @@ def save_summary(summary,file_name, approach_id):
 # concatenate Text
 def concatenate_text(subtexts):
     return " ".join(subtexts)
+
+# Evaluate a string and return true if a defined substring is found
+def contains_substring(string, substring):
+    return substring in string
+
+# CSV Export funtion
+def export_to_csv(list,cols,file_name):
+    df = pd.DataFrame(list,columns=cols)
+    df.to_csv(file_name,index=False,encoding='utf-8')

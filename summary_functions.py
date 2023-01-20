@@ -1,3 +1,8 @@
+'''
+Summary Functions:
+
+This code contains different summary functions which implement different models and approaches. 
+'''
 from helper_functions import *
 import os
 from dotenv import load_dotenv
@@ -85,15 +90,8 @@ def generate_german_summary(text):
    return tokenizer.decode(output[0], skip_special_tokens=True)
 
 # Translate Text to German then summarize with GPT3 and translate back
-def translate_summarize(text):
-    text_token = split_text(text, 700)
-    translation = []
-    for text in text_token:
-        translation.append(translate(text, "EN"))
-    res = []
-    for result in translation:
-        res.append(gpt3_summarize(result, 150))
-    translated_res = []
-    for t_result in res:
-        translated_res.append(translate(t_result, "DE"))
-    return concatenate_text(translated_res)
+def translate_summarize(text,max_tokens):
+    translation = translate(text, "EN")
+    summary = gpt3_summarize(translation, max_tokens)
+    res = translate(summary, "DE")
+    return res

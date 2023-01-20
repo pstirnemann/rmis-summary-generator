@@ -64,5 +64,6 @@ venv/
 convert/
 output/
 output_save/
+output_save2/
 .env
 *.csv
