@@ -41,10 +41,11 @@ Durring the execution the script will write out some logs about the current task
 
 **Disclaimer !!!**
 
-**The script uses an API provided by openAI which generatescosts. Be carefull how to use it. 
-To avoid costs the following approaches need to be commented out: 
+**The script uses an API provided by openAI which generatescosts. Be carefull how to use it.**
+
+To avoid costs the following approaches need to be commented out:
 - Approach 1 (GPT-3)
-- Approach 4 (Translation & GPT-3)**
+- Approach 4 (Translation & GPT-3)
 
 ---
 
